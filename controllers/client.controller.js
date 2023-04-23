@@ -16,6 +16,16 @@ async function createClient(req, res, next) {
     }
 }
 
+async function getClients(req, res, next) {
+    try {
+        res.send(await ClientService.getClients());
+        logger.info("Get /clients")
+    } catch (err) {
+        next(err);
+    }
+}
+
 export default {
-    createClient
+    createClient,
+    getClients
 }
