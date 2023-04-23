@@ -16,9 +16,14 @@ async function deleteClient(id) {
     await clientRepository.deleteClient(id);
 }
 
+async function updateClient(client) {
+    return await clientRepository.updateClient(client);
+}
+
 export default {
     createClient,
     getClients,
     getClient,
-    deleteClient
+    deleteClient,
+    updateClient
 }
