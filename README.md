@@ -5,6 +5,14 @@
 
 ![](https://igti-one-click-v2.azurewebsites.net/assets/images/bootcamp/33.svg)
 
+## Diagrama do BD
+
+------
+
+![Diagrama do BD](./Diagram_BD.png)
+
+------
+
 Este é um dos projetos práticos do bootcamp Desenvolvedor Node.JS da Faculdade XP Educação
 
 Deseja iniciar a aplicação? Lembre de usar:
