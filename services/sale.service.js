@@ -36,7 +36,19 @@ async function getSale(id) {
 }
 
 async function deleteSale(id) {
-    await saleRepository.deleteSale(id);
+    const sale = await saleRepository.getSale(id);
+
+    // Validação de venda
+    if (sale) {
+        const product = await productRepository.getProduct(sale.product_id);
+        await saleRepository.deleteSale(id);
+
+        // Incremento no estoque
+        product.stock++;
+        await productRepository.updateProduct(product);
+    } else {
+        throw new Error("Venda inexistente");
+    }
 }
 
 async function updateSale(sale) {
