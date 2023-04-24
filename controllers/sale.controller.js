@@ -17,7 +17,7 @@ async function createSale(req, res, next) {
 
 async function getSales(req, res, next) {
     try {
-        res.send(await SaleService.getSales());
+        res.send(await SaleService.getSales(req.query.product_id));
         global.logger.info("Get /sales")
     } catch (err) {
         next(err);
