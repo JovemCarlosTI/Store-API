@@ -7,11 +7,24 @@ async function createSale(sale) {
     if (!await clientRepository.getClient(sale.client_id)) {
         throw new Error("O client_id não existe")
     }
-    if (!await productRepository.getProduct(sale.product_id)) {
+
+    const product = await productRepository.getProduct(sale.product_id)
+
+    if (!product) {
         throw new Error("O product_id não existe")
     }
 
-    return await saleRepository.insertSale(sale);
+    if (product.stock > 0) {
+        sale = await saleRepository.insertSale(sale);
+
+        // Redução no estoque
+        product.stock--;
+        await productRepository.updateProduct(product);
+
+        return sale;
+    } else {
+        throw new Error("Produto indisponível no estoque")
+    }
 }
 
 async function getSales() {
@@ -34,7 +47,7 @@ async function updateSale(sale) {
     if (!await productRepository.getProduct(sale.product_id)) {
         throw new Error("O product_id não existe")
     }
-    
+
     return await saleRepository.updateSale(sale);
 }
 
