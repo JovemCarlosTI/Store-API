@@ -1,4 +1,4 @@
-import { connect } from "./repository.js";
+import connect from "./repository.js";
 
 async function insertSupplier(supplier) {
     const conn = await connect();
