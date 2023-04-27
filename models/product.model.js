@@ -29,4 +29,4 @@ const Product = db.define('products', {
 
 Product.belongsTo(Supplier, { foreignKey: "supplierId" });
 
-export default Client;
+export default Product;
