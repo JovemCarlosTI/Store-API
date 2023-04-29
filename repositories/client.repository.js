@@ -1,4 +1,3 @@
-import connect from "./repository.js";
 import Client from '../models/client.model.js';
 
 async function insertClient(client) {
