@@ -57,28 +57,32 @@ async function getSale(id) {
 }
 
 async function deleteSale(id) {
-    const conn = await connect();
     try {
-        await conn.query("DELETE FROM sales WHERE saleId = $1", [id]);
+        await Sale.destroy({
+            where: {
+                saleId: id
+            }
+        });
     } catch (err) {
         throw err;
-    } finally {
-        conn.release();
     }
 }
 
 async function updateSale(sale) {
-    const conn = await connect();
     try {
-        const sql = "UPDATE sales SET value = $1, date = $2, clientId = $3 WHERE saleId = $4 RETURNING *";
-        const values = [sale.value, sale.date, sale.clientId, sale.saleId];
-
-        const res = await conn.query(sql, values);
-        return res.rows[0];
+        await Sale.update({
+            value: sale.value,
+            date: sale.date,
+            clientId: sale.clientId
+        },
+        {
+            where: {
+                saleId: sale.saleId
+            }
+        });
+        return await getSale(sale.saleId);
     } catch (err) {
         throw err;
-    } finally {
-        conn.release();
     }
 }
 

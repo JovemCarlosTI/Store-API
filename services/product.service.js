@@ -20,7 +20,7 @@ async function getProduct(id) {
 
 async function deleteProduct(id) {
     const sale = saleRepository.getSalesByProductId(id);
-    if (sale) throw new Error("Não é possível excluir o produto pois ele já tem vendas.");
+    if (sale.length > 0) throw new Error("Não é possível excluir o produto pois ele já tem vendas.");
 
     await productRepository.deleteProduct(id);
 }
