@@ -3,15 +3,15 @@ import clientRepository from '../repositories/client.repository.js';
 import productRepository from '../repositories/product.repository.js';
 
 async function createSale(sale) {
-    // Validação de client_id e product_id
-    if (!await clientRepository.getClient(sale.client_id)) {
-        throw new Error("O client_id não existe")
+    // Validação de clientId e productId
+    if (!await clientRepository.getClient(sale.clientId)) {
+        throw new Error("O clientId não existe")
     }
 
-    const product = await productRepository.getProduct(sale.product_id)
+    const product = await productRepository.getProduct(sale.productId)
 
     if (!product) {
-        throw new Error("O product_id não existe")
+        throw new Error("O productId não existe")
     }
 
     if (product.stock > 0) {
@@ -27,9 +27,9 @@ async function createSale(sale) {
     }
 }
 
-async function getSales(product_id) {
-    if (product_id) {
-        return await saleRepository.getSalesByProductId(product_id);
+async function getSales(productId) {
+    if (productId) {
+        return await saleRepository.getSalesByProductId(productId);
     } else {
         return await saleRepository.getSales();
     }
@@ -44,7 +44,7 @@ async function deleteSale(id) {
 
     // Validação de venda
     if (sale) {
-        const product = await productRepository.getProduct(sale.product_id);
+        const product = await productRepository.getProduct(sale.productId);
         await saleRepository.deleteSale(id);
 
         // Incremento no estoque
@@ -56,12 +56,12 @@ async function deleteSale(id) {
 }
 
 async function updateSale(sale) {
-    // Validação de client_id e product_id
-    if (!await clientRepository.getClient(sale.client_id)) {
-        throw new Error("O client_id não existe")
+    // Validação de clientId e productId
+    if (!await clientRepository.getClient(sale.clientId)) {
+        throw new Error("O clientId não existe")
     }
-    if (!await productRepository.getProduct(sale.product_id)) {
-        throw new Error("O product_id não existe")
+    if (!await productRepository.getProduct(sale.productId)) {
+        throw new Error("O productId não existe")
     }
 
     return await saleRepository.updateSale(sale);
