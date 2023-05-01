@@ -1,6 +1,7 @@
 import productRepository from "../repositories/product.repository.js";
 import supplierRepository from "../repositories/supplier.repository.js";
 import saleRepository from '../repositories/sale.repository.js';
+import productInfoRepository from "../repositories/productInfo.repository.js";
 
 async function createProduct(product) {
     if (await supplierRepository.getSupplier(product.supplierId)) {
@@ -33,10 +34,15 @@ async function updateProduct(product) {
     }
 }
 
+async function createProductInfo(productInfo) {
+    await productInfoRepository.createProductInfo(productInfo);
+}
+
 export default {
     createProduct,
     getProducts,
     getProduct,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    createProductInfo
 }

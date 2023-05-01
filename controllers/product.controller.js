@@ -58,10 +58,25 @@ async function updateProduct(req, res, next) {
     }
 }
 
+async function createProductInfo(req, res, next) {
+    try {
+        let productInfo = req.body;
+        if (!productInfo.productId) {
+            throw new Error("Product ID é obrigatório!");
+        }
+        await ProductService.createProductInfo(productInfo);
+        res.end();
+        global.logger.info(`POST /product/info - ${JSON.stringify(productInfo)}`);
+    } catch (err) {
+        next(err);
+    }
+}
+
 export default {
     createProduct,
     getProducts,
     getProduct,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    createProductInfo
 }
