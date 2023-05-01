@@ -24,6 +24,18 @@ async function getProductInfo(productId) {
     }
 }
 
+async function getProductsInfo() {
+    const client = getClient();
+    try {
+        await client.connect();
+        return await client.db("store").collection("productInfo").find({}).toArray();
+    } catch (err) {
+        throw err;
+    } finally {
+        await client.close();
+    }
+}
+
 async function updateProductInfo(productInfo) {
     const client = getClient();
     try {
@@ -31,6 +43,18 @@ async function updateProductInfo(productInfo) {
         await client.db("store").collection("productInfo").updateOne({
             productId: productInfo.productId},
             {$set: {...productInfo}});
+    } catch (err) {
+        throw err;
+    } finally {
+        await client.close();
+    }
+}
+
+async function deleteProductInfo(productId) {
+    const client = getClient();
+    try {
+        await client.connect();
+        return await client.db("store").collection("productInfo").deleteOne({productId})
     } catch (err) {
         throw err;
     } finally {
@@ -63,6 +87,8 @@ export default {
     createProductInfo,
     updateProductInfo,
     getProductInfo,
+    deleteProductInfo,
+    getProductsInfo,
     createReview,
     deleteReview
 }

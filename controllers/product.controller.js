@@ -58,6 +58,25 @@ async function updateProduct(req, res, next) {
     }
 }
 
+async function getProductsInfo(req, res, next) {
+    try {
+        res.send(await ProductService.getProductsInfo());
+        global.logger.info("GET /product/info");
+    } catch (err) {
+        next(err);
+    }
+}
+
+async function deleteProductInfo(req, res, next) {
+    try {
+        let { id } = req.params;
+        res.send(await ProductService.deleteProductInfo(parseInt(id)));
+        global.logger.info("DELETE /product/info");
+    } catch (err) {
+        next(err);
+    }
+}
+
 async function createProductInfo(req, res, next) {
     try {
         let productInfo = req.body;
@@ -66,6 +85,7 @@ async function createProductInfo(req, res, next) {
         }
         await ProductService.createProductInfo(productInfo);
         res.end();
+
         global.logger.info(`POST /product/info - ${JSON.stringify(productInfo)}`);
     } catch (err) {
         next(err);
@@ -78,6 +98,7 @@ async function updateProductInfo(req, res, next) {
         if (!productInfo.productId) throw new Error("Product ID é obrigatório!");
         await ProductService.updateProductInfo(productInfo);
         res.end();
+
         global.logger.info(`PUT /product/info - ${JSON.stringify(productInfo)}`);
     } catch (err) {
         next(err);
@@ -91,6 +112,8 @@ async function createReview(req, res, next) {
 
         await ProductService.createReview(review, productId);
         res.end();
+
+        global.logger.info("POST /product/review");
     } catch (err) {
         next(err);
     }
@@ -101,6 +124,8 @@ async function deleteReview(req, res, next) {
         let { id, index } = req.params;
         await ProductService.deleteReview(id, index);
         res.end();
+
+        global.logger.info(`DELETE /product/${id}/review/${index}`);
     } catch (err) {
         next(err);
     }
@@ -115,5 +140,7 @@ export default {
     createProductInfo,
     updateProductInfo,
     createReview,
-    deleteReview
+    deleteReview,
+    getProductsInfo,
+    deleteProductInfo
 }
