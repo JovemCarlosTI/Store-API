@@ -1,10 +1,10 @@
-import mongodb from 'mongodb';
+import mongoose from 'mongoose';
 
-function getClient() {
+async function connect() {
     const URI = `mongodb+srv://root:mongodb123Ç@cluster0.uxbjjey.mongodb.net/?retryWrites=true&w=majority`;
-    return new mongodb.MongoClient(URI);
+    return await mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 }
 
 export {
-    getClient
+    connect
 }
